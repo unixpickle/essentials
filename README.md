@@ -1,8 +1,10 @@
 # essentials
 
-There are some simple things that should be built-in to Go. As I find such things, I'll add them to this package.
+There are some simple things that should be built-in to Go. As I find such things, I'll add them to this package. See the [GoDoc](https://godoc.org/github.com/unixpickle/essentials) for more. I will try to document some of the package's functionality here in the README, but not everything.
 
-Currently, the only thing in here is a "die" routine. Here's an example of the problem:
+# The Die API
+
+This API is useful for CLI apps where you want to exit with an error code in several places. Take this for example:
 
 ```go
 if dataFile == "" {
