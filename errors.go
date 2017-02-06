@@ -6,10 +6,10 @@ type CtxError struct {
 	Original error
 }
 
-// AddCtx creates a CtxError by adding some context
+// AddCtx creates a *CtxError by adding some context
 // to an existing error.
 // If the original error is nil, then this returns nil.
-func AddCtx(ctx string, err error) *CtxError {
+func AddCtx(ctx string, err error) error {
 	if err == nil {
 		return nil
 	}
