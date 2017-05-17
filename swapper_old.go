@@ -9,8 +9,8 @@ func swapper(list interface{}) func(i, j int) {
 	return func(i, j int) {
 		val1 := val.Index(i)
 		val2 := val.Index(j)
-		saved1 := val1.Elem()
-		val1.Set(val2.Elem())
-		val2.Set(saved1)
+		backup := val1.Interface()
+		val1.Set(val2)
+		val2.Set(reflect.ValueOf(backup))
 	}
 }
