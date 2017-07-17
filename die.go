@@ -12,3 +12,11 @@ func Die(args ...interface{}) {
 	fmt.Fprintln(os.Stderr, args...)
 	os.Exit(1)
 }
+
+// Must dies with the error if it is non-nil.
+// If the error is nil, Must is a no-op.
+func Must(err error) {
+	if err != nil {
+		Die(err)
+	}
+}
