@@ -5,6 +5,15 @@ import (
 	"sort"
 )
 
+// Reverse reverses a slice in-place.
+func Reverse(slice interface{}) {
+	size := reflect.ValueOf(slice).Len()
+	sw := swapper(slice)
+	for i := 0; i < size/2; i++ {
+		sw(i, size-i-1)
+	}
+}
+
 // VoodooSort sorts the list using the comparator, while
 // simultaneously re-ordering a set of other lists to
 // match the re-ordering of the sorted list.

@@ -5,6 +5,24 @@ import (
 	"testing"
 )
 
+func TestReverse(t *testing.T) {
+	pairs := [][2][]int{
+		{[]int{}, []int{}},
+		{[]int{1}, []int{1}},
+		{[]int{1, 2}, []int{2, 1}},
+		{[]int{1, 2, 3}, []int{3, 2, 1}},
+		{[]int{1, 2, 3, 4}, []int{4, 3, 2, 1}},
+		{[]int{1, 2, 3, 4, 5}, []int{5, 4, 3, 2, 1}},
+	}
+	for _, pair := range pairs {
+		old := append([]int{}, pair[0]...)
+		Reverse(pair[0])
+		if !reflect.DeepEqual(pair[0], pair[1]) {
+			t.Errorf("reverse of %v should be %v but got %v", old, pair[1], pair[0])
+		}
+	}
+}
+
 func TestVoodooSort(t *testing.T) {
 	list := []int{5, 3, 4, 7, 9, 1}
 	other1 := []string{
