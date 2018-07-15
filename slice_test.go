@@ -23,6 +23,28 @@ func TestReverse(t *testing.T) {
 	}
 }
 
+func TestContains(t *testing.T) {
+	list1 := []int{1, 2, 3}
+	for _, val := range list1 {
+		if !Contains(list1, val) {
+			t.Errorf("did not contain %d", val)
+		}
+	}
+	if Contains(list1, 4) {
+		t.Error("should not contain 4")
+	}
+
+	list2 := []interface{}{"hey", nil, "test"}
+	for _, val := range list2 {
+		if !Contains(list2, val) {
+			t.Errorf("did not contain %v", val)
+		}
+	}
+	if Contains(list2, "yo") {
+		t.Error("should not contain \"yo\"")
+	}
+}
+
 func TestVoodooSort(t *testing.T) {
 	list := []int{5, 3, 4, 7, 9, 1}
 	other1 := []string{

@@ -14,6 +14,18 @@ func Reverse(slice interface{}) {
 	}
 }
 
+// Contains checks if a slice contains a value.
+// Comparisons are performed using the == operator.
+func Contains(slice, value interface{}) bool {
+	sliceVal := reflect.ValueOf(slice)
+	for i := 0; i < sliceVal.Len(); i++ {
+		if sliceVal.Index(i).Interface() == value {
+			return true
+		}
+	}
+	return false
+}
+
 // VoodooSort sorts the list using the comparator, while
 // simultaneously re-ordering a set of other lists to
 // match the re-ordering of the sorted list.
