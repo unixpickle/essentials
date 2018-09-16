@@ -32,6 +32,14 @@ func MinInt(ns ...int) int {
 	return min
 }
 
+// AbsInt computes the absolute value of an int.
+func AbsInt(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
+
 // Round rounds to the nearest whole number.
 //
 // When x is the same distance from two different whole
