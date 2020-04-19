@@ -6,6 +6,16 @@ type CtxError struct {
 	Original error
 }
 
+// Cause returns the original error.
+func (c *CtxError) Cause() error {
+	return c.Original
+}
+
+// Unwrap returns the original error.
+func (c *CtxError) Unwrap() error {
+	return c.Original
+}
+
 // AddCtx creates a *CtxError by adding some context
 // to an existing error.
 // If the original error is nil, then this returns nil.
