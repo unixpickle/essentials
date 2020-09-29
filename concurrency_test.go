@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"testing"
+	"time"
 )
 
 func ExampleConcurrentMap() {
@@ -75,4 +77,30 @@ func ExampleReduceConcurrentMap() {
 	fmt.Println(totalSum)
 
 	// Output: 49995000
+}
+
+func BenchmarkConcurrentMap(b *testing.B) {
+	b.Run("EvenWorkload", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			ConcurrentMap(2, 100, func(i int) {
+				time.Sleep(time.Millisecond)
+			})
+		}
+	})
+	b.Run("UnbalancedWorkload", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			ConcurrentMap(2, 100, func(i int) {
+				if i%2 == 0 {
+					time.Sleep(time.Millisecond * 2)
+				}
+			})
+		}
+	})
+	b.Run("HugeWorkload", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			ConcurrentMap(2, 1000000, func(i int) {
+				time.Sleep(time.Nanosecond)
+			})
+		}
+	})
 }
