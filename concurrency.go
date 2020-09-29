@@ -3,6 +3,7 @@ package essentials
 import (
 	"runtime"
 	"sync"
+	"sync/atomic"
 )
 
 // ConcurrentMap calls f for every integer in [0, n).
@@ -50,6 +51,9 @@ func ReduceConcurrentMap(maxGos, n int, g func() (iter func(i int), reduce func(
 		maxGos = n
 	}
 
+	var counter int64
+	n64 := int64(n)
+
 	var wg sync.WaitGroup
 	var lock sync.Mutex
 	for i := 0; i < maxGos; i++ {
@@ -57,8 +61,12 @@ func ReduceConcurrentMap(maxGos, n int, g func() (iter func(i int), reduce func(
 		go func(start int) {
 			defer wg.Done()
 			f, reduce := g()
-			for i := start; i < n; i += maxGos {
-				f(i)
+			for {
+				idxPlus1 := atomic.AddInt64(&counter, 1)
+				if idxPlus1 > n64 {
+					break
+				}
+				f(int(idxPlus1 - 1))
 			}
 			if reduce != nil {
 				lock.Lock()
